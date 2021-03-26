@@ -9,6 +9,7 @@ class GetMovieListUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
 
-    suspend fun execute(): Result<MovieList> = repository.getMovieList()
+    suspend fun execute(apiKey: String, pageNumber: Int): Result<MovieList> = repository
+        .getMovieList(apiKey, pageNumber)
 
 }

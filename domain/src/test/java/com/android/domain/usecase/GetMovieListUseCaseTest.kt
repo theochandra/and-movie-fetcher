@@ -4,6 +4,7 @@ import com.android.domain.Result
 import com.android.domain.coroutines.CoroutineTestRule
 import com.android.domain.model.MovieList
 import com.android.domain.repository.MovieRepository
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -37,20 +38,20 @@ class GetMovieListUseCaseTest {
     fun getMovieListUseCase_returnResultSuccess() {
         runBlocking {
             val movieList: MovieList = mock()
-            given(repository.getMovieList())
+            given(repository.getMovieList(any(), any()))
                 .willReturn(Result.Success(movieList))
-            sut.execute()
-            verify(repository).getMovieList()
+            sut.execute("testApiKey", 1)
+            verify(repository).getMovieList("testApiKey", 1)
         }
     }
 
     @Test
     fun getMovieListUseCase_returnResultError() {
         runBlocking {
-            given(repository.getMovieList())
+            given(repository.getMovieList(any(), any()))
                 .willReturn(Result.Error(500, "Internal server error"))
-            sut.execute()
-            verify(repository).getMovieList()
+            sut.execute("testApiKey", 1)
+            verify(repository).getMovieList("testApiKey", 1)
         }
     }
 
@@ -58,10 +59,10 @@ class GetMovieListUseCaseTest {
     fun getMovieListUseCase_returnResultException() {
         runBlocking {
             val exception: Exception = mock()
-            given(repository.getMovieList())
+            given(repository.getMovieList(any(), any()))
                 .willReturn(Result.Exception(exception))
-            sut.execute()
-            verify(repository).getMovieList()
+            sut.execute("testApiKey", 1)
+            verify(repository).getMovieList("testApiKey", 1)
         }
     }
 
