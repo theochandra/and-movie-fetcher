@@ -1,5 +1,6 @@
 package com.android.data.mapper
 
+import androidx.annotation.VisibleForTesting
 import com.android.data.response.MovieListResponse
 import com.android.data.response.MovieResponse
 import com.android.domain.model.Movie
@@ -17,7 +18,8 @@ class MovieMapper @Inject constructor() {
         )
     }
 
-    private fun map(movieResponse: MovieResponse): Movie {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun map(movieResponse: MovieResponse): Movie {
         return Movie(
             id = movieResponse.id,
             overview = movieResponse.overview,
