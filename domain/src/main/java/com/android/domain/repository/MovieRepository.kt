@@ -5,6 +5,6 @@ import com.android.domain.model.MovieList
 
 interface MovieRepository {
 
-    suspend fun getMovieList(apiKey: String, pageNumber: Int): Result<MovieList>
+    suspend fun getMovieList(apiKey: String, query: String, pageNumber: Int): Result<MovieList>
 
 }

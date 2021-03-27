@@ -36,10 +36,10 @@ class MovieRepositoryImplTest {
     @Test
     fun movieRepository_getMovieListResponse() {
         runBlocking {
-            given(serviceApi.getMovieList(any(), any()))
+            given(serviceApi.getMovieList(any(), any(), any()))
                 .willReturn(mock())
-            sut.getMovieList("testApiKey", 1)
-            verify(serviceApi).getMovieList(any(), any())
+            sut.getMovieList("testApiKey", "superman", 1)
+            verify(serviceApi).getMovieList(any(), any(), any())
         }
     }
 
@@ -49,12 +49,12 @@ class MovieRepositoryImplTest {
             val movieListResponse = mock<MovieListResponse>()
             val response = success(movieListResponse)
 
-            given(serviceApi.getMovieList(any(), any()))
+            given(serviceApi.getMovieList(any(), any(), any()))
                 .willReturn(response)
             given(mapper.map(any<MovieListResponse>()))
                 .willReturn(mock())
 
-            sut.getMovieList("testApiKey", 1)
+            sut.getMovieList("testApiKey", "superman", 1)
             verify(mapper).map(eq(movieListResponse))
         }
     }
@@ -66,12 +66,12 @@ class MovieRepositoryImplTest {
             val response = success(movieListResponse)
             val movieList = mock<MovieList>()
 
-            given(serviceApi.getMovieList(any(), any()))
+            given(serviceApi.getMovieList(any(), any(), any()))
                 .willReturn(response)
             given(mapper.map(any<MovieListResponse>()))
                 .willReturn(movieList)
 
-            val result = sut.getMovieList("testApiKey", 1)
+            val result = sut.getMovieList("testApiKey", "superman", 1)
             assertThat(result, equalTo(Result.Success(movieList)))
         }
     }

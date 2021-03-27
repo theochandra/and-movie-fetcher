@@ -7,9 +7,10 @@ import retrofit2.http.Query
 
 interface ServiceEndPoint {
 
-    @GET
+    @GET("search/movie")
     suspend fun getMovieList(
         @Query("api_key") apiKey: String,
+        @Query("query") query: String,
         @Query("page") pageNumber: Int
     ): Response<MovieListResponse>
 

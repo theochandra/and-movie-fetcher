@@ -38,20 +38,20 @@ class GetMovieListUseCaseTest {
     fun getMovieListUseCase_returnResultSuccess() {
         runBlocking {
             val movieList: MovieList = mock()
-            given(repository.getMovieList(any(), any()))
+            given(repository.getMovieList(any(), any(), any()))
                 .willReturn(Result.Success(movieList))
-            sut.execute("testApiKey", 1)
-            verify(repository).getMovieList("testApiKey", 1)
+            sut.execute("testApiKey", "superman", 1)
+            verify(repository).getMovieList("testApiKey", "superman", 1)
         }
     }
 
     @Test
     fun getMovieListUseCase_returnResultError() {
         runBlocking {
-            given(repository.getMovieList(any(), any()))
+            given(repository.getMovieList(any(), any(), any()))
                 .willReturn(Result.Error(500, "Internal server error"))
-            sut.execute("testApiKey", 1)
-            verify(repository).getMovieList("testApiKey", 1)
+            sut.execute("testApiKey", "superman", 1)
+            verify(repository).getMovieList("testApiKey", "superman", 1)
         }
     }
 
@@ -59,10 +59,10 @@ class GetMovieListUseCaseTest {
     fun getMovieListUseCase_returnResultException() {
         runBlocking {
             val exception: Exception = mock()
-            given(repository.getMovieList(any(), any()))
+            given(repository.getMovieList(any(), any(), any()))
                 .willReturn(Result.Exception(exception))
-            sut.execute("testApiKey", 1)
-            verify(repository).getMovieList("testApiKey", 1)
+            sut.execute("testApiKey", "superman", 1)
+            verify(repository).getMovieList("testApiKey", "superman", 1)
         }
     }
 

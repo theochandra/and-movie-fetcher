@@ -8,8 +8,10 @@ class ServiceApi @Inject constructor(
     private val serviceEndPoint: ServiceEndPoint
 ) {
 
-    suspend fun getMovieList(apiKey: String, pageNumber: Int): Response<MovieListResponse> {
-        return serviceEndPoint.getMovieList(apiKey, pageNumber)
+    suspend fun getMovieList(
+        apiKey: String, query: String, pageNumber: Int
+    ): Response<MovieListResponse> {
+        return serviceEndPoint.getMovieList(apiKey, query, pageNumber)
     }
 
 }

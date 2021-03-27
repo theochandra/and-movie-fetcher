@@ -12,15 +12,19 @@ class MovieRepositoryImpl(
     private val mapper: MovieMapper
 ) : MovieRepository {
 
-    override suspend fun getMovieList(apiKey: String, pageNumber: Int): Result<MovieList> {
+    override suspend fun getMovieList(
+        apiKey: String, query: String, pageNumber: Int)
+    : Result<MovieList> {
         return safeApiCall(
-            call = { getMovieListFromApi(apiKey, pageNumber) },
+            call = { getMovieListFromApi(apiKey, query, pageNumber) },
             errorMessage = "Exception occurred!"
         )
     }
 
-    private suspend fun getMovieListFromApi(apiKey: String, pageNumber: Int): Result<MovieList> {
-        val result = serviceApi.getMovieList(apiKey, pageNumber)
+    private suspend fun getMovieListFromApi(
+        apiKey: String, query: String, pageNumber: Int
+    ): Result<MovieList> {
+        val result = serviceApi.getMovieList(apiKey, query, pageNumber)
 
         if (result.isSuccessful) {
             val body = result.body()
