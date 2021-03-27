@@ -5,6 +5,7 @@ import com.android.and_movie_fetcher.di.Injector
 import com.android.and_movie_fetcher.di.application.AppComponent
 import com.android.and_movie_fetcher.di.application.AppModule
 import com.android.and_movie_fetcher.di.application.DaggerAppComponent
+import com.android.and_movie_fetcher.di.screen.movielist.MovieListSubComponent
 
 class BaseApplication : Application(), Injector {
 
@@ -16,6 +17,10 @@ class BaseApplication : Application(), Injector {
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(applicationContext))
             .build()
+    }
+
+    override fun createMovieListSubComponent(): MovieListSubComponent {
+        return appComponent.movieListSubComponent().create()
     }
 
 }
