@@ -94,10 +94,18 @@ dependencies {
     // testing
     testImplementation "junit:junit:$junit_version"
 
-    testImplementation 'androidx.test.ext:junit:1.1.2'
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "org.mockito:mockito-inline:$mockito_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_nhaarman_version"
+
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+
+    androidTestImplementation "androidx.test:runner:$androidx_test"
+    androidTestImplementation "androidx.test:core:$androidx_test"
+    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_test_espresso"
 
     kaptTest "com.google.dagger:dagger-compiler:$dagger_version"
     testCompileOnly "javax.annotation:jsr250-api:$javax_annotation_version"

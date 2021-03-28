@@ -28,6 +28,10 @@ class MovieRepositoryImplTest {
 
     private lateinit var sut: MovieRepository
 
+    private val apiKey = "testApiKey"
+    private val query = "superman"
+    private val page = 1
+
     @Before
     fun setup() {
         sut = MovieRepositoryImpl(serviceApi, mapper)
@@ -38,7 +42,7 @@ class MovieRepositoryImplTest {
         runBlocking {
             given(serviceApi.getMovieList(any(), any(), any()))
                 .willReturn(mock())
-            sut.getMovieList("testApiKey", "superman", 1)
+            sut.getMovieList(apiKey, query, page)
             verify(serviceApi).getMovieList(any(), any(), any())
         }
     }
@@ -54,7 +58,7 @@ class MovieRepositoryImplTest {
             given(mapper.map(any<MovieListResponse>()))
                 .willReturn(mock())
 
-            sut.getMovieList("testApiKey", "superman", 1)
+            sut.getMovieList(apiKey, query, page)
             verify(mapper).map(eq(movieListResponse))
         }
     }
@@ -71,7 +75,7 @@ class MovieRepositoryImplTest {
             given(mapper.map(any<MovieListResponse>()))
                 .willReturn(movieList)
 
-            val result = sut.getMovieList("testApiKey", "superman", 1)
+            val result = sut.getMovieList(apiKey, query, page)
             assertThat(result, equalTo(Result.Success(movieList)))
         }
     }
