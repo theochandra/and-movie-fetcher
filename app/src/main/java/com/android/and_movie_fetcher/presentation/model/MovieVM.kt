@@ -8,6 +8,7 @@ data class MovieVM (
     val id: Int,
     val overview: String,
     val posterPath: String?,
-    val releaseDate: String,
+    val releaseDate: String?,
     val title: String,
+    val voteAverage: Double,
 ) : Parcelable

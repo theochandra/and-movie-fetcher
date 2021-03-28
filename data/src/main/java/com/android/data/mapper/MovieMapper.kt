@@ -25,7 +25,8 @@ class MovieMapper @Inject constructor() {
             overview = movieResponse.overview,
             posterPath = movieResponse.posterPath,
             releaseDate = movieResponse.releaseDate,
-            title = movieResponse.title
+            title = movieResponse.title,
+            voteAverage = movieResponse.voteAverage
         )
     }
 

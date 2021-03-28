@@ -12,7 +12,8 @@ class MovieVmMapper @Inject constructor() {
             overview = movie.overview,
             posterPath = movie.posterPath,
             releaseDate = movie.releaseDate,
-            title = movie.title
+            title = movie.title,
+            voteAverage = movie.voteAverage
         )
     }
 
