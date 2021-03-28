@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">and-movie-fetcher</string>
+
+    <string name="lbl_error_no_connection">
+        Something went wrong.. :( \n Please try again in a few minutes.
+    </string>
+    <string name="lbl_btn_retry">Retry</string>
 </resources>

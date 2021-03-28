@@ -12,7 +12,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     fun setMovieVmList(movieVMs: List<MovieVM>) {
         movieVmList.addAll(movieVMs)
-        notifyDataSetChanged()
+        notifyItemInserted(movieVmList.size - 1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

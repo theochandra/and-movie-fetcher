@@ -1,7 +1,8 @@
 package com.android.and_movie_fetcher.presentation.screen.movielist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ class MovieListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieListBinding
     private lateinit var viewModel: MovieListViewModel
     private lateinit var movieAdapter: MovieAdapter
+    private lateinit var scrollListener: InfiniteScrollListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +34,20 @@ class MovieListActivity : AppCompatActivity() {
 
         initRecyclerView()
         observeMovieVmList()
+        observeIsStillLoading()
+        observeIsLastPage()
     }
 
     private fun initRecyclerView() {
         movieAdapter = MovieAdapter()
+        scrollListener = InfiniteScrollListener {
+            getMoreMovieList()
+        }
         binding.rvMovies.apply {
             layoutManager = LinearLayoutManager(
                 this@MovieListActivity, LinearLayoutManager.VERTICAL, false)
             adapter = movieAdapter
+            addOnScrollListener(scrollListener)
         }
     }
 
@@ -47,6 +55,23 @@ class MovieListActivity : AppCompatActivity() {
         viewModel.movieVmList.observe(this, { movieVmList ->
             movieAdapter.setMovieVmList(movieVmList)
         })
+    }
+
+    private fun observeIsStillLoading() {
+        viewModel.isLoading.observe(this, { isLoading ->
+            scrollListener.isLoading = isLoading
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        })
+    }
+
+    private fun observeIsLastPage() {
+        viewModel.isLastPage.observe(this, { isLastPage ->
+            scrollListener.isLastPage = isLastPage
+        })
+    }
+
+    private fun getMoreMovieList() {
+        viewModel.getMovieList()
     }
 
 }

@@ -28,9 +28,49 @@
             tools:listitem="@layout/item_movie"
             tools:itemCount="5"/>
 
+        <LinearLayout
+            android:id="@+id/layout_error"
+            android:visibility="@{viewModel.isError}"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_xxl"
+                android:src="@drawable/ic_no_internet_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_error"
+                android:layout_marginTop="@dimen/margin_m"
+                android:padding="@dimen/padding_m"
+                android:gravity="center"
+                android:text="@string/lbl_error_no_connection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"/>
+
+            <Button
+                android:id="@+id/btn_retry"
+                android:text="@string/lbl_btn_retry"
+                android:layout_marginTop="@dimen/margin_l"
+                android:layout_marginStart="@dimen/margin_m"
+                android:layout_marginEnd="@dimen/margin_m"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.onRetryClicked()}"/>
+
+        </LinearLayout>
+
         <ProgressBar
             android:id="@+id/progress_bar"
-            android:visibility="@{viewModel.isLoading}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

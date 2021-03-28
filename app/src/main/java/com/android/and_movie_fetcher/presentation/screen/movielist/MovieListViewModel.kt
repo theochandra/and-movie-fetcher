@@ -22,31 +22,76 @@ class MovieListViewModel @Inject constructor(
     val movieVmList: LiveData<List<MovieVM>>
         get() = _movieVmList
 
-    val isLoading = ObservableBoolean()
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean>
+        get() =  _isLoading
+
+    private val _isLastPage = MutableLiveData<Boolean>()
+    val isLastPage: LiveData<Boolean>
+        get() =  _isLastPage
+
+    val isError = ObservableBoolean()
+
+    private val query = "superman"
+    private var totalPages = 0
+    private var currentPage = 1
 
     init {
         getMovieList()
     }
 
     fun getMovieList() {
-        isLoading.set(true)
+        if (currentPage < totalPages)
+            currentPage++
+        _isLastPage.postValue(currentPage == totalPages)
+        fetchMovieList()
+    }
+
+    private fun fetchMovieList() {
+        showLoading()
+
         viewModelScope.launch {
-            val result = useCase.execute(BuildConfig.API_KEY, 1)
+            val result = useCase.execute(BuildConfig.API_KEY, query, currentPage)
             when (result) {
                 is Result.Success -> {
                     _movieVmList.postValue(
                         result.data.results.map { mapper.map(it) }
                     )
+                    totalPages = result.data.totalPages
                 }
                 is Result.Error -> {
-
+                    changeErrorState(true)
                 }
                 is Result.Exception -> {
-
+                    changeErrorState(true)
                 }
             }
-            isLoading.set(false)
+
+            hideLoading()
         }
+    }
+
+    private fun showLoading() {
+        _isLoading.postValue(true)
+    }
+
+    private fun hideLoading() {
+        _isLoading.postValue(false)
+    }
+
+    private fun changeErrorState(state: Boolean) {
+        isError.set(state)
+    }
+
+    private fun resetPages() {
+        totalPages = 0
+        currentPage = 1
+    }
+
+    fun onRetryClicked() {
+        changeErrorState(false)
+        resetPages()
+        getMovieList()
     }
 
 }
