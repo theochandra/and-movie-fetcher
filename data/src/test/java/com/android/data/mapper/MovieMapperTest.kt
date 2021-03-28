@@ -30,7 +30,8 @@ class MovieMapperTest {
                     "storyline that appeared in DC Comics' publications in the 1990s.",
             posterPath = "/itvuWm7DFWWzWgW0xgiaKzzWszP.jpg",
             releaseDate = "2007-09-18",
-            title = "Superman: Doomsday"
+            title = "Superman: Doomsday",
+            voteAverage = 7.8
         )
 
         movieListResponse = MovieListResponse(
@@ -47,7 +48,8 @@ class MovieMapperTest {
                     "storyline that appeared in DC Comics' publications in the 1990s.",
             posterPath = "/itvuWm7DFWWzWgW0xgiaKzzWszP.jpg",
             releaseDate = "2007-09-18",
-            title = "Superman: Doomsday"
+            title = "Superman: Doomsday",
+            voteAverage = 7.8
         )
 
         movieList = MovieList(
@@ -92,6 +94,12 @@ class MovieMapperTest {
     fun movieMapper_mapsMovieResponseTitle_returnMovieTitle() {
         val result = sut.map(movieResponse)
         assertThat(result.title, equalTo(movie.title))
+    }
+
+    @Test
+    fun movieMapper_mapsMovieResponseVoteAverage_returnMovieVoteAverage() {
+        val result = sut.map(movieResponse)
+        assertThat(result.voteAverage, equalTo(movie.voteAverage))
     }
 
     @Test
