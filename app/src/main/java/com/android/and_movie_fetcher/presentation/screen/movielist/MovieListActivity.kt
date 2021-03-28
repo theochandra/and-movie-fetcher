@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.and_movie_fetcher.R
 import com.android.and_movie_fetcher.databinding.ActivityMovieListBinding
 import com.android.and_movie_fetcher.di.Injector
+import com.android.and_movie_fetcher.presentation.model.MovieVM
+import com.android.and_movie_fetcher.presentation.screen.moviedetail.MovieDetailActivity
 import javax.inject.Inject
 
 class MovieListActivity : AppCompatActivity() {
@@ -39,7 +41,9 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        movieAdapter = MovieAdapter()
+        movieAdapter = MovieAdapter { movieVM ->
+            onItemClicked(movieVM)
+        }
         scrollListener = InfiniteScrollListener {
             getMoreMovieList()
         }
@@ -49,6 +53,11 @@ class MovieListActivity : AppCompatActivity() {
             adapter = movieAdapter
             addOnScrollListener(scrollListener)
         }
+    }
+
+    private fun onItemClicked(movieVM: MovieVM) {
+        val intent = MovieDetailActivity.newIntent(this, movieVM)
+        startActivity(intent)
     }
 
     private fun observeMovieVmList() {

@@ -37,6 +37,8 @@
                 android:text="@{model.title}"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_marginStart="@dimen/margin_m"
                 style="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintTop_toTopOf="@id/iv_movie_thumbnail"
@@ -46,12 +48,12 @@
 
             <TextView
                 android:id="@+id/tv_movie_release_date"
-                android:text="@{model.releaseDate}"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_m"
                 android:layout_marginTop="@dimen/margin_s"
                 style="@style/TextAppearance.AppCompat.Caption"
+                app:formatDate="@{model.releaseDate}"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
                 app:layout_constraintStart_toEndOf="@id/iv_movie_thumbnail"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +61,6 @@
 
             <TextView
                 android:id="@+id/tv_movie_overview"
-                android:text="@{model.overview}"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
@@ -67,6 +68,7 @@
                 android:layout_marginStart="@dimen/margin_m"
                 android:layout_marginTop="@dimen/margin_s"
                 style="@style/TextAppearance.AppCompat.Small"
+                app:overview="@{model.overview}"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movie_release_date"
                 app:layout_constraintStart_toEndOf="@id/iv_movie_thumbnail"
                 app:layout_constraintEnd_toEndOf="parent"

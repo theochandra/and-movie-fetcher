@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.and_movie_fetcher.databinding.ItemMovieBinding
 import com.android.and_movie_fetcher.presentation.model.MovieVM
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(
+    private val onItemClickListener: (MovieVM) -> Unit
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     private val movieVmList = ArrayList<MovieVM>()
 
@@ -24,14 +26,22 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movieVM = movieVmList[position]
-        holder.binding.model = movieVM
+        holder.bind(movieVmList[position], onItemClickListener)
     }
 
     override fun getItemCount(): Int = movieVmList.size
 
     class MovieViewHolder(
-        val binding: ItemMovieBinding
-    ) : RecyclerView.ViewHolder(binding.root)
+        private val binding: ItemMovieBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(movieVM: MovieVM, onItemClickListener: (MovieVM) -> Unit) {
+            binding.model = movieVM
+            binding.root.setOnClickListener {
+                onItemClickListener(movieVM)
+            }
+        }
+
+    }
 
 }
